@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>example2</title>
+	<style>
+		.se-left,
+		.se-right {
+			width: 200px;
+			height: 200px;
+		}
+		.btn-container {
+			margin-top: 20px;
+		}
+		.btn-default {
+			width: 100px;
+			height: 38px;
+			line-height: 38px;
+			text-align: center;
+			display: inline-block;
+			color: #fff;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.btn-success {
+			background: green;
+		}
+		.btn-warn {
+			background: red;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="select-container">
+		<select multiple id="se-left" class="se-left" ondblclick="handleLeft(this);">
+		  	<option value="">1</option>
+		  	<option value="">2</option>
+		  	<option value="">3</option>
+		  	<option value="">4</option>
+		  	<option value="">5</option>
+		  	<option value="">6</option>
+		  	<option value="">7</option>
+		  	<option value="">8</option>
+		  	<option value="">9</option>
+		  	<option value="">10</option>
+		  	<option value="">11</option>
+		  	<option value="">12</option>
+		  	<option value="">13</option>
+		  	<option value="">14</option>
+		  	<option value="">15</option>
+		  	<option value="">16</option>
+		</select>
+		<select multiple="10" id="se-right" class="se-right">
+		  	
+		</select>
+	</div>
+	<div class="btn-container">
+		<div class="btn-default btn-success" onclick="add();">add</div>
+		<div class="btn-default btn-success" onclick="addAll();">addAll</div>
+		<div class="btn-default btn-warn" onclick="deleteSingle();">delete</div>
+		<div class="btn-default btn-warn" onclick="deleteAll();">deleteAll</div>
+	</div>
+	<script>
+		var rightArr = [];
+		var rightNum;
+
+
+		function handleLeft(e) {
+			var index = e.selectedIndex;
+			var txt = e.options[index].text;
+			var val = checkRepetition();
+			checkAdd(txt, val);
+			
+		}
+
+		function add() {
+			var left = document.getElementById('se-left');
+			var index = left.selectedIndex;
+			if(index > -1) {
+				var txt = left.options[index].text;
+				var val = checkRepetition();
+				checkAdd(txt, val);
+			}
+		}
+
+		function addAll() {
+			var left = document.getElementById('se-left');
+			var right = document.getElementById('se-right');
+			if(left.options.length > 0) {
+				if(right.options.length == 0) {
+					right.innerHTML = left.innerHTML;
+				} else {
+					var leftArray = [];
+					if(right.options.length > 1) {
+						leftArray = [];
+						for(let i = 0; i < left.options.length; i++) {
+							var flag = false;
+							for(let j = 0; j < right.options.length; j++) {
+								if(left.options[i].text == right.options[j].text) {
+									flag = true;
+									break;
+								}
+							}
+							if(!flag) {
+								leftArray.push(left.options[i].text);
+							}
+						}
+					} else {
+						leftArray = [];
+						for(let i = 0; i < left.options.length; i++) {
+							if(left.options[i].text != right.options[0].text) {
+								leftArray.push(left.options[i].text);
+							}
+						}
+					}
+					for(let k in leftArray) {
+						var opt = document.createElement('option');
+						opt.innerHTML = leftArray[k];
+						document.getElementById('se-right').appendChild(opt);
+					}
+				}
+			}
+		}
+
+		function deleteSingle() {
+			var right = document.getElementById('se-right');
+			var index = right.selectedIndex;
+			if(index > -1) {
+				right.removeChild(right.options[index]);
+			}
+		}
+
+		function deleteAll() {
+			var right = document.getElementById('se-right');
+			if(right.options.length > 0) {
+				right.innerHTML = '';
+				
+			}
+		}
+
+		function checkRepetition() {
+			var right = document.getElementById('se-right');
+			if(right.length > 0) {
+				if(right.options.length == 1) {
+					rightNum = right.options[0].text;
+					return rightNum;
+				} else {
+					rightArr = [];
+					for(let i  = 0; i < right.options.length; i++) {
+						rightArr.push(right.options[i].text);
+					}
+					return rightArr;
+				}
+				
+			}
+			
+		}
+
+		function checkAdd(txt, val) {
+			if(typeof(val) == 'undefined') {
+				var opt = document.createElement('option');
+				opt.innerHTML = txt;
+				document.getElementById('se-right').appendChild(opt);
+			} else if(typeof(val) == 'string') {
+				if(txt == val) {
+					alert('此选项已被添加，不能重复添加');
+				} else {
+					var opt = document.createElement('option');
+					opt.innerHTML = txt;
+					document.getElementById('se-right').appendChild(opt);
+				}
+			} else if(typeof(val) == 'object') {
+				var flag = false;
+				for(let i in val) {
+					if(txt == val[i]) {
+						flag = true;
+						alert('此选项已被添加，不能重复添加');
+						break;
+					}
+				}
+				if(!flag) {
+					var opt = document.createElement('option');
+					opt.innerHTML = txt;
+					document.getElementById('se-right').appendChild(opt);
+				}
+			}
+		}
+	</script>
+</body>
+</html>

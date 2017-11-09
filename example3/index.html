@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>example3</title>
+</head>
+<body>
+	<div class="select-checkbox">
+		<input type="checkbox" name="btnAll" value="全选" onclick="selectAll(this)" />全选
+		<input type="checkbox" name="btn" value="苹果" onclick="singleSelect(this)" />苹果
+		<input type="checkbox" name="btn" value="橘子" onclick="singleSelect(this)" />橘子
+	</div>
+	<script>
+		var flag = false;
+
+		function selectAll(e) {
+			var checkbox = document.getElementsByName('btn');
+
+			for(var i = 0, l = checkbox.length; i < l; i++) {
+				checkbox[i].checked = e.checked;
+			}
+		}
+
+		function singleSelect(e) {
+			var checkAll = document.getElementsByName('btnAll');
+			var checkbox = document.getElementsByName('btn');
+			if(!e.checked) {
+				checkAll[0].checked = e.checked;
+			}
+
+			for(let i = 0, l = checkbox.length; i < l; i++) {
+				
+				if(!checkbox[i].checked) {
+					flag = true;
+					return;
+				}
+			}
+			if(flag) {
+				checkAll[0].checked = true;
+			}
+		}
+	</script>
+</body>
+</html>

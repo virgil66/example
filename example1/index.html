@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>example1</title>
+	<!-- <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script> -->
+	<style>
+		.se-left,
+		.se-right {
+			width: 200px;
+			height: 200px;
+		}
+		.btn-container {
+			margin-top: 20px;
+		}
+		.btn-default {
+			width: 100px;
+			height: 38px;
+			line-height: 38px;
+			text-align: center;
+			display: inline-block;
+			color: #fff;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		.btn-success {
+			background: green;
+		}
+		.btn-warn {
+			background: red;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="select-container">
+		<select multiple id="se-left" class="se-left" ondblclick="handleDblClick(this);">
+		  	<option value="1">1</option>
+		  	<option value="2">2</option>
+		  	<option value="3">3</option>
+		  	<option value="4">4</option>
+		  	<option value="5">5</option>
+		  	<option value="6">6</option>
+		  	<option value="7">7</option>
+		  	<option value="8">8</option>
+		  	<option value="9">9</option>
+		  	<option value="10">10</option>
+		  	<option value="11">11</option>
+		  	<option value="12">12</option>
+		  	<option value="13">13</option>
+		  	<option value="14">14</option>
+		  	<option value="15">15</option>
+		  	<option value="16">16</option>
+		</select>
+		<select multiple="10" id="se-right" class="se-right">
+		  	
+		</select>
+	</div>
+	<div class="btn-container">
+		<div class="btn-default btn-success" onclick="addSingle();">add</div>
+		<div class="btn-default btn-success" onclick="addAll();">addAll</div>
+		<div class="btn-default btn-warn" onclick="deleteSingle();">delete</div>
+		<div class="btn-default btn-warn" onclick="deleteAll();">deleteAll</div>
+	</div>
+	<script>
+		function handleDblClick(e) {
+			var index = e.selectedIndex;
+			var txt = e.options[index].text;
+			var val = e.options[index].value;
+			var opt = document.createElement('option');
+			opt.innerHTML = txt;
+			opt.setAttribute('value', val);
+			document.getElementById('se-right').appendChild(opt);
+			e.removeChild(e.options[index]);
+		}
+
+		function addSingle() {
+			var left = document.getElementById('se-left');
+			var index = left.selectedIndex;
+			if(index > -1) {
+				var txt = left.options[index].text;
+				var val = left.options[index].value;
+				var opt = document.createElement('option');
+				opt.innerHTML = txt;
+				opt.setAttribute('value', val);
+				document.getElementById('se-right').appendChild(opt);
+				left.removeChild(left.options[index]);
+			}
+		}
+
+		function addAll() {
+			var left = document.getElementById('se-left');
+			var right = document.getElementById('se-right');
+			if(left.options.length) {
+				if(left.options.length == 1) {
+					right.appendChild(left.options[0]);
+				} else {
+					for(let i = 0; i < left.options.length; i++) {
+						var txt = left.options[i].text;
+						var val = left.options[i].value;
+						var opt = document.createElement('option');
+						opt.innerHTML = txt;
+						opt.setAttribute('value', val);
+						document.getElementById('se-right').appendChild(opt);
+					}
+					left.innerHTML = '';
+				}
+			}
+		}
+
+		function deleteSingle() {
+			var right = document.getElementById('se-right');
+			var index = right.selectedIndex;
+			if(index > -1) {
+				var txt = right.options[index].text;
+				var val = right.options[index].value;
+				var opt = document.createElement('option');
+				opt.innerHTML = txt;
+				opt.setAttribute('value', val);
+				document.getElementById('se-left').appendChild(opt);
+				right.removeChild(right.options[index]);
+			}
+		}
+
+		function deleteAll() {
+			var left = document.getElementById('se-left');
+			var right = document.getElementById('se-right');
+			if(right.options.length) {
+				if(right.options.length == 1) {
+					left.appendChild(right.options[0]);
+				} else {
+					for(let i = 0; i < right.options.length; i++) {
+						var txt = right.options[i].text;
+						var val = right.options[i].value;
+						var opt = document.createElement('option');
+						opt.innerHTML = txt;
+						opt.setAttribute('value', val);
+						document.getElementById('se-left').appendChild(opt);
+					}
+					right.innerHTML = '';
+				}
+			}
+		}
+	</script>
+</body>
+</html>
