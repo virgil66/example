@@ -41,3 +41,12 @@ CSS Grid 布局由两个核心组成部分是 Wrapper (父元素) 和 items (子
 
 ![grid_9](https://github.com/virgil66/example/blob/master/example4/images/grid_9.png)
 
+4、grid-gap
+grid-gap: <grid-row-gap> | <grid-column-gap> 用来控制行和列之间的间距，比如，我们设置行和列的间距为 10px:
+
+![gird_10](https://github.com/virgil66/example/blob/master/example4/images/grid_10.png)
+
+![gird_11](https://github.com/virgil66/example/blob/master/example4/images/grid_11.png)
+
+目前，关于 grid 布局的内容写到这里，以后如果在学习到 grid 的东西的话，会继续添加到这里的。
+
